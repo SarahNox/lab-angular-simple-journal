@@ -1,0 +1,19 @@
+<h2> Add New Journal </h2>
+<a [routerLink]="['']"> Back to list </a>
+<form>
+  <fieldset>
+    <legend> Journal info </legend>
+    <label> Title </label>
+    <input type="text" [(ngModel)]="newJournal.title" name="title" required />
+
+    <label> Content </label>
+    <input type="text" [(ngModel)]="newJournal.content" name="content" required />
+
+    <label> Date </label>
+    <input type="date" [(ngModel)]="newJournal.date" name="date" required />
+ <!-- date or text? -->
+  </fieldset>
+  <button (click)="submit()"> submit </button>
+</form>
+
+<p> {{ feedback }} </p>

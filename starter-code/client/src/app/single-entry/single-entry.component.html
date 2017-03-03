@@ -1,0 +1,8 @@
+<h2> Journal Details </h2>
+<a [routerLink]="['']"> Back to list </a>
+
+<div *ngIf="journal">
+    <h2> {{ journal.title }}&nbsp;</h2>
+    <h3> {{ journal.content }} </h3>
+</div>
+<button (click)="deleteJournal()"> Delete </button>

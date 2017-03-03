@@ -7,9 +7,11 @@ const bodyParser   = require('body-parser');
 const layouts      = require('express-ejs-layouts');
 const mongoose     = require('mongoose');
 
-mongoose.connect('mongodb://localhost/journal-development');
+mongoose.connect('mongodb://localhost:27017/journal');
+var cors = require('cors');
 
 const app = express();
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,8 +29,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(layouts);
 
+const journal = require('./routes/api/journal-entries');
 const index = require('./routes/index');
 app.use('/', index);
+app.use('/journal', journal);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
