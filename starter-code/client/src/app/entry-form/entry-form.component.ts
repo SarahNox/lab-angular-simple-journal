@@ -1,49 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from "@angular/router";
-import { FileUpLoader } from '';
+import { JournalService } from './../journal.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import {Observable} from 'rxjs/Rx';
+
 
 @Component({
   selector: 'app-entry-form',
   templateUrl: './entry-form.component.html',
-  styleUrls: ['./entry-form.component.css']
+  styleUrls: ['./entry-form.component.css'],
+  providers: [JournalService]
 })
 
 export class EntryFormComponent implements OnInit {
-  uploader: FileUploader = new FileUploader({
-    url: `/journals/`
-  });
 
-  newJournal = {
-    title: '',
-    content: '',
+newJournal = {
+    title: String,
+    content: String,
     date: Date
   };
-  feedback: string;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute,
+  private journals: JournalService,
+  private router: Router) { }
 
-  ngOnInit() {
-    this.uploader.onSuccessItem = (item, response) => {
-      this.feedback = JSON.parse(response).message;
-    };
-
-    this.uploader.onErrorItem = (item, response, status, headers) => {
-      this.feedback = JSON.parse(response).message;
-    };
-  }
-
-  // addSpec(spec) {
-  //   this.newPhone.specs.push(spec);
-  // }
+  ngOnInit() {  }
 
   submit() {
-    this.uploader.onBuildItemForm = (item, form) => {
-      form.append('title', this.newJournal.title);
-      form.append('content', this.newJournal.content);
-      form.append('date', this.newJournal.date);
-      // form.append('specs', JSON.stringify(this.newPhone.specs));
-    };
-
-    this.uploader.uploadAll();
-  }
-}
+     this.journals.createJournal(this.newJournal)
+   }
+ }
